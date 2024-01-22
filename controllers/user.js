@@ -28,3 +28,26 @@ exports.register = asyncHandler(async (req, res) => {
     .status(200)
     .json({ status: "OK", message: "Kullanıcı kayıt işlemi tamam", newUser });
 });
+
+//Kullanıcı login işlemleri
+exports.login = asyncHandler(async (req, res) => {
+  const { username, password } = req.body;
+  // Kullanıcı kontrolu
+  const user = await User.findOne({ username });
+  if (!user) {
+    throw new Error("Kullanıcı bulunamadı");
+  }
+  const isMatched = await bcrypt.compare(password, user?.password);
+  if (!isMatched) {
+    throw new Error("Giriş bilgileri doğru değil");
+  }
+  // Son giriş zamanını güncelleme için veritabanında bir güncelleme işlemi gerçekleştirilmeli
+  user.lastLogin = new Date();
+  res.json({
+    status: "success",
+    email: user?.email,
+    _id: user?._id,
+    username: user?.username,
+    role: user?.role,
+  });
+});
