@@ -51,3 +51,22 @@ exports.login = asyncHandler(async (req, res) => {
     role: user?.role,
   });
 });
+
+//Kullanıcı bilgilerini getirme
+exports.getProfile = asyncHandler(async (req, res, next) => {
+  //İlk populate fonksiyonu, "productViewrs" adlı bir alanı doldurur. Bu alanın değerleri, Product modeliyle ilişkilidir. Yani, User modelindeki productViewrs alanındaki her öğe, ilgili Product modeli ile ilişkilendirilen verilerle doldurulur. path parametresi, doldurulacak alanın adını belirtirken, model parametresi ise ilişkilendirilen modelin adını belirtir.
+  const user = await User.findById(id)
+    .populate({
+      path: "productViewrs",
+      model: "Product",
+    })
+    .populate({
+      path: "likedProduct",
+      model: "Product",
+    });
+  res.json({
+    status: "succes",
+    message: "Profile girildi",
+    user,
+  });
+});
