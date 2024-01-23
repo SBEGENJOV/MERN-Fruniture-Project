@@ -3,6 +3,7 @@ const crypto = require("crypto");
 const asyncHandler = require("express-async-handler");
 const User = require("../model/User");
 const Product = require("../model/Product");
+const generateToken = require("../utils/generateToken");
 
 //Kullanıcı kayıt olma işlemi
 
@@ -48,6 +49,7 @@ exports.login = asyncHandler(async (req, res) => {
     status: "success",
     email: user?.email,
     _id: user?._id,
+    token: generateToken(user),
     username: user?.username,
     role: user?.role,
   });
