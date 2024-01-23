@@ -181,3 +181,50 @@ exports.updateUserProfile = asyncHandler(async (req, res) => {
   });
 });
 
+//Şifremi unuttum
+exports.forgotpassword = expressAsyncHandler(async (req, res) => {
+  const { email } = req.body;
+  //DB de maili arıyoruz
+  const userFound = await User.findOne({ email });
+  if (!userFound) {
+    throw new Error("Email iniz sistemde kayıtlı degil");
+  }
+  //Yeni token oluşturma
+  const resetToken = await userFound.generatePasswordResetToken();
+  //Degişimi kaydediyoruz
+  await userFound.save();
+
+  //send email
+  sendEmail(email, resetToken);
+  res
+    .status(200)
+    .json({ message: "Şifre yenileme mesajı gönderildi", resetToken });
+});
+
+//Şifre yenileme token işlemleri
+exports.resetPassword = expressAsyncHandler(async (req, res) => {
+  //email de gelen parametreyi alma
+  const { resetToken } = req.params;
+  const { password } = req.body;
+  //Veritabındaki token ile dışardan gelen token karşılaştırılır.
+  const cryptoToken = crypto
+    .createHash("sha256")
+    .update(resetToken)
+    .digest("hex");
+  //Bizim verecegimiz özelliklere uyan kişileri buluyoruz
+  const userFound = await User.findOne({
+    passwordResetToken: cryptoToken,
+    passwordResetExpires: { $gt: Date.now() },
+  });
+  if (!userFound) {
+    throw new Error("Şifre yenilemek için verilen süre bitmiş olabilir");
+  }
+  //Şİfreyi değiştiriyoruz
+  const salt = await bcrypt.genSalt(10);
+  userFound.password = await bcrypt.hash(password, salt);
+  userFound.passwordResetExpires = undefined;
+  userFound.passwordResetToken = undefined;
+  //İşlem sonucunu döndürüyoruz
+  await userFound.save();
+  res.status(200).json({ message: "Şifre yenileme işlemi başarılı" });
+});
