@@ -5,6 +5,7 @@ const {
   login,
   likeProduct,
   dislikedProduct,
+  updateUserProfile,
 } = require("../controllers/user");
 const isLoggin = require("../middlewares/isLoggin");
 
@@ -16,6 +17,7 @@ usersRouter.post("/login", login);
 usersRouter.get("/profile/", isLoggin, getProfile);
 usersRouter.put("/likes/:id", isLoggin, likeProduct);
 usersRouter.put("/dislikes/:id", isLoggin, dislikedProduct);
+usersRouter.put("/update-profile/", isLoggin, updateUserProfile);
 
 //*Kullana bilmek için eksport ediyorum
 module.exports = usersRouter;

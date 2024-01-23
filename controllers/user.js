@@ -153,3 +153,31 @@ exports.dislikedProduct = expressAsyncHandler(async (req, res) => {
   res.status(200).json({ message: "Ürün beğenilenlerden çıkarıldı.", user });
 });
 
+//Kullanıcı bilgilerini değiştirme
+exports.updateUserProfile = asyncHandler(async (req, res) => {
+  //!Kullanıcı kontorlu
+  const userId = req.userAuth?._id;
+  const userFound = await User.findById(userId);
+  if (!userFound) {
+    throw new Error("Kullanıcı bulunamadı");
+  }
+  //! Kullanıcı email ve adı degiştirme işlemi
+  const { username, email } = req.body;
+  const post = await User.findByIdAndUpdate(
+    userId,
+    {
+      email: email ? email : userFound?.email,
+      username: username ? username : userFound?.username,
+    },
+    {
+      new: true,
+      runValidators: true,
+    }
+  );
+  res.status(201).json({
+    status: "Başarılı",
+    message: "Kullanıcı başarı ile güncellendi",
+    post,
+  });
+});
+
