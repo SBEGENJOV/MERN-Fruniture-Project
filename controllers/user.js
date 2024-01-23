@@ -96,3 +96,60 @@ exports.productViewers = asyncHandler(async (req, res) => {
     status: "Başarılı",
   });
 });
+
+//Ürün begenme
+exports.likeProduct = expressAsyncHandler(async (req, res) => {
+  //Product id sini alma
+  const { id } = req.params;
+  //Kullanıcının giriş yaptıgı id yi bulma
+  const userId = req.userAuth._id;
+  //Postu bulma
+  const product = await Product.findById(id);
+  if (!product) {
+    throw new Error("Ürün yok");
+  }
+  const user = await User.findById(userId);
+  const userlikedProduct = user.likedProduct.filter(
+    (like) => like.toString() === id.toString()
+  );
+  if (userlikedProduct.length > 0) {
+    throw new Error("Ürün zaten eklenmiş");
+  }
+  //Begenenlere ekleme
+  await User.findByIdAndUpdate(
+    userId,
+    {
+      $addToSet: { likedProduct: id },
+    },
+    { new: true }
+  );
+  //Sonuçu kaydet
+  await post.save();
+  res.status(200).json({ message: "Post begenilenlere eklendi.", post });
+});
+
+//Ürünü begenilenlerden çıkarma
+exports.dislikedProduct = expressAsyncHandler(async (req, res) => {
+  // Product id sini alma
+  const { id } = req.params;
+  // Kullanıcının giriş yaptığı id'yi bulma
+  const userId = req.userAuth._id;
+  // Ürünü bulma
+  const product = await Product.findById(id);
+  
+  if (!product) {
+    throw new Error("Ürün yok");
+  }
+
+  // Kullanıcıyı bulma
+  const user = await User.findById(userId);
+  user.likedProduct = user.likedProduct.filter(
+    (like) => like.toString() !== id.toString()
+  );
+  
+  // Kullanıcının değişiklikleri kaydetme
+  await user.save();
+  
+  res.status(200).json({ message: "Ürün beğenilenlerden çıkarıldı.", user });
+});
+
