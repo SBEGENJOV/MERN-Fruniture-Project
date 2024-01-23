@@ -1,7 +1,8 @@
 const bcrypt = require("bcryptjs");
 const crypto = require("crypto");
 const asyncHandler = require("express-async-handler");
-const User = require("../model/user");
+const User = require("../model/User");
+const Product = require("../model/Product");
 
 //Kullanıcı kayıt olma işlemi
 
@@ -68,5 +69,30 @@ exports.getProfile = asyncHandler(async (req, res, next) => {
     status: "succes",
     message: "Profile girildi",
     user,
+  });
+});
+
+//Bakılan ürünü bakılanlara ekleme
+exports.productViewers = asyncHandler(async (req, res) => {
+  //* Find that we want to view his profile
+  const productId = req.params.productId;
+
+  const product = await Product.findById(productId);
+  if (!product) {
+    throw new Error("Böyle bir ürün yok");
+  }
+  //Kendi bilgilerini bulmak
+  const currentUserId = req.userAuth._id;
+  const currentUser = await User.findById(currentUserId);
+  //? Check if user already viewed the profile
+  if (currentUser?.productViewrs?.includes(productId)) {
+    throw new Error("Zaten bakmışsın");
+  }
+  //push the user current user id into the user profile
+  currentUser.productViewrs.push(productId);
+  await currentUser.save();
+  res.json({
+    message: "Ürün bakılanlar listesine eklendi",
+    status: "Başarılı",
   });
 });
