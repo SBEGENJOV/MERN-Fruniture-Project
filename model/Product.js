@@ -16,7 +16,7 @@ const ProductSchema = mongoose.Schema(
     colors: [{ type: String, required: true }],
     description: { type: String, required: true },
     comment: [CommentSchema],
-    stokCode: [{ type: String, required: true }],
+    stokCode: { type: String, required: true },
     price: {
       current: { type: Number, required: true },
       discount: { type: Number },

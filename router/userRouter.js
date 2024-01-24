@@ -13,6 +13,8 @@ const isLoggin = require("../middlewares/isLoggin");
 
 //*Kütüphaneyi kullana bilmek için değişkene atadım.
 const usersRouter = express.Router();
+//!Dosya yükleme ara yazılımı
+const upload = multer({ storage });
 
 usersRouter.post("/register", register);
 usersRouter.post("/login", login);
