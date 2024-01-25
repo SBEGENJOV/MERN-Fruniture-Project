@@ -59,11 +59,34 @@ exports.createProduct = asyncHandler(async (req, res) => {
 });
 
 // Tüm ürünleri getirme (Read- All)
-exports.getProduct = asyncHandler(async (req, res) => {
+exports.getProducts = asyncHandler(async (req, res) => {
   try {
     const product = await Product.find();
     res.status(200).json(product);
   } catch (error) {
     res.status(500).json({ error: "Server hatası" });
   }
+});
+
+//Tekli ürün atma
+exports.getProducts = asyncHandler(async (req, res) => {
+  const post = await Product.findById(req.params.id).populate("productType");
+  res.status(201).json({
+    status: "Başarılı",
+    message: "Post getirildi",
+    post,
+  });
+});
+
+//Ürün silme
+exports.deleteProduct = asyncHandler(async (req, res) => {
+  const productFound = await Product.findById(req.params.id);
+  if (!productFound) {
+    throw new Error("Ürün bulunamadı");
+  }
+  await Product.findByIdAndDelete(req.params.id);
+  res.status(201).json({
+    status: "Başarılı",
+    message: "Ürün silindi",
+  });
 });
