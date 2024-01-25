@@ -64,6 +64,6 @@ exports.getProduct = asyncHandler(async (req, res) => {
     const product = await Product.find();
     res.status(200).json(product);
   } catch (error) {
-    res.status(500).json({ error: "Server error" });
+    res.status(500).json({ error: "Server hatası" });
   }
 });

@@ -33,8 +33,8 @@ const userSchema = new mongoose.Schema(
       type: String,
       enum: ["Kadın", "Erkek", "Belirtmek istemiyorum"],
     },
-    productViewrs: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
-    likedProduct: [{ type: mongoose.Schema.Types.ObjectId, ref: "Post" }],
+    productViewrs: [{ type: mongoose.Schema.Types.ObjectId, ref: "Product" }],
+    likedProduct: [{ type: mongoose.Schema.Types.ObjectId, ref: "Product" }],
     passwordResetToken: {
       type: String,
     },
