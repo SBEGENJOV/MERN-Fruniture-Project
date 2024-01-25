@@ -69,12 +69,12 @@ exports.getProducts = asyncHandler(async (req, res) => {
 });
 
 //Tekli ürün atma
-exports.getProducts = asyncHandler(async (req, res) => {
-  const post = await Product.findById(req.params.id).populate("productType");
+exports.getProduct = asyncHandler(async (req, res) => {
+  const product = await Product.findById(req.params.id).populate("productType");
   res.status(201).json({
     status: "Başarılı",
     message: "Post getirildi",
-    post,
+    product,
   });
 });
 
@@ -88,5 +88,49 @@ exports.deleteProduct = asyncHandler(async (req, res) => {
   res.status(201).json({
     status: "Başarılı",
     message: "Ürün silindi",
+  });
+});
+
+//Ürün güncelleme
+exports.updateProduct = asyncHandler(async (req, res) => {
+  //eşleştirme
+  const { id } = req.params;
+  const productFound = await Post.findById(id);
+  if (!productFound) {
+    throw new Error("Ürün yok");
+  }
+  //resim yolunu belirtme
+  const {
+    name,
+    colors,
+    description,
+    stokCode,
+    price,
+    warranty,
+    stokCount,
+    productTypeID,
+  } = req.body;
+  const product = await Product.findByIdAndUpdate(
+    id,
+    {
+      img: req?.file?.path ? req?.file?.path : productFound?.img,
+      name: name ? name : productFound?.name,
+      colors: colors ? colors : productFound?.colors,
+      description: description ? description : productFound?.description,
+      stokCode: stokCode ? stokCode : productFound?.stokCode,
+      price: price ? price : productFound?.price,
+      warranty: warranty ? warranty : productFound?.warranty,
+      stokCount: stokCount ? stokCount : productFound?.stokCount,
+      productType: productTypeID ? productTypeID : productFound?.productType,
+    },
+    {
+      new: true,
+      runValidators: true,
+    }
+  );
+  res.status(201).json({
+    status: "Başarılı",
+    message: "Ürün güncellendi",
+    product,
   });
 });
