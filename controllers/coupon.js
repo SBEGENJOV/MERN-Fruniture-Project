@@ -38,3 +38,13 @@ exports.getCoupons = asyncHandler(async (req, res) => {
     res.status(500).json({ error: "Server hatası" });
   }
 });
+
+//Tek kupon getirme
+exports.getCoupon = asyncHandler(async (req, res) => {
+  const coupon = await Coupon.findById(req.params.id);
+  res.status(201).json({
+    status: "Başarılı",
+    message: "Post getirildi",
+    coupon,
+  });
+});
