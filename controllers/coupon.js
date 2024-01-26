@@ -51,13 +51,44 @@ exports.getCoupon = asyncHandler(async (req, res) => {
 
 //Kupon silme
 exports.deleteCoupon = asyncHandler(async (req, res) => {
-    const couponFound = await Coupon.findById(req.params.id);
-    if (!couponFound) {
-      throw new Error("Kupon bulunamadı");
-    }
-    await Coupon.findByIdAndDelete(req.params.id);
-    res.status(201).json({
-      status: "Başarılı",
-      message: "Kupon silindi",
-    });
+  const couponFound = await Coupon.findById(req.params.id);
+  if (!couponFound) {
+    throw new Error("Kupon bulunamadı");
+  }
+  await Coupon.findByIdAndDelete(req.params.id);
+  res.status(201).json({
+    status: "Başarılı",
+    message: "Kupon silindi",
   });
+});
+
+//Kupon güncelleme
+exports.updateCoupon = asyncHandler(async (req, res) => {
+  //eşleştirme
+  const { id } = req.params;
+  const couponFound = await Coupon.findById(id);
+  if (!couponFound) {
+    throw new Error("Kupon yok");
+  }
+  //Verileri kullanıcıdan alma
+  const { code, discountPercent, counts } = req.body;
+  const coupon = await Coupon.findByIdAndUpdate(
+    id,
+    {
+      code: code ? code : couponFound?.code,
+      discountPercent: discountPercent
+        ? discountPercent
+        : couponFound?.discountPercent,
+      counts: counts ? counts : couponFound?.counts,
+    },
+    {
+      new: true,
+      runValidators: true,
+    }
+  );
+  res.status(201).json({
+    status: "Başarılı",
+    message: "Kupon güncellendi",
+    coupon,
+  });
+});
