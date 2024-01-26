@@ -92,3 +92,25 @@ exports.updateCoupon = asyncHandler(async (req, res) => {
     coupon,
   });
 });
+
+//Kupon kullanma
+exports.singleCoupon = asyncHandler(async (req, res) => {
+  // Eşleştirme
+  const { id } = req.params;
+  const couponFound = await Coupon.findById(id);
+  if (!couponFound) {
+    throw new Error("Kupon yok");
+  }
+
+  // Verileri kullanıcıdan alma
+  const counts = couponFound.counts; // Burada counts değerini alın
+  const coupon = await Coupon.findByIdAndUpdate(id, {
+    counts: counts < 1 ? "Kuponların hepsi kullanıldı" : counts - 1,
+  });
+
+  res.status(201).json({
+    status: "Başarılı",
+    message: "Kupon eksiltildi ve güncellendi",
+    coupon,
+  });
+});
