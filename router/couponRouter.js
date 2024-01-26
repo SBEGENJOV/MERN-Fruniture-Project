@@ -15,6 +15,6 @@ couponRouter.get("/", getCoupons);
 couponRouter.get("/:id", getCoupon);
 couponRouter.delete("/:id", isLoggin, deleteCoupon);
 couponRouter.put("/:id", isLoggin, updateCoupon);
-couponRouter.put("/:id", isLoggin, singleCoupon);
+couponRouter.put("/single/:singleid", singleCoupon);
 
 module.exports = couponRouter;

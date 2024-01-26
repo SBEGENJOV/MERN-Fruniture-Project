@@ -8,8 +8,11 @@ const {
   updateUserProfile,
   resetPassword,
   forgotpassword,
+  getProfile,
 } = require("../controllers/user");
 const isLoggin = require("../middlewares/isLoggin");
+const storage = require("../utils/fileUpload");
+
 
 //*Kütüphaneyi kullana bilmek için değişkene atadım.
 const usersRouter = express.Router();

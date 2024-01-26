@@ -25,7 +25,7 @@ exports.createCoupon = asyncHandler(async (req, res) => {
   res.json({
     status: "Başarılı",
     message: "Kupon yüklendi",
-    product,
+    coupon,
   });
 });
 
@@ -96,21 +96,21 @@ exports.updateCoupon = asyncHandler(async (req, res) => {
 //Kupon kullanma
 exports.singleCoupon = asyncHandler(async (req, res) => {
   // Eşleştirme
-  const { id } = req.params;
-  const couponFound = await Coupon.findById(id);
+  const { singleid } = req.params;
+  const couponFound = await Coupon.findById(singleid);
   if (!couponFound) {
     throw new Error("Kupon yok");
   }
 
   // Verileri kullanıcıdan alma
   const counts = couponFound.counts; // Burada counts değerini alın
-  const coupon = await Coupon.findByIdAndUpdate(id, {
+  const coupon = await Coupon.findByIdAndUpdate(singleid, {
     counts: counts < 1 ? "Kuponların hepsi kullanıldı" : counts - 1,
   });
 
   res.status(201).json({
     status: "Başarılı",
     message: "Kupon eksiltildi ve güncellendi",
-    coupon,
+    Coupon,
   });
 });

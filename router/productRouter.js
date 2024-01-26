@@ -1,7 +1,7 @@
 const express = require("express");
 const multer = require("multer");
+const storage = require("../utils/fileUpload");
 const upload = multer({ storage });
-const storage = require("../../utils/fileUpload");
 const isLoggin = require("../middlewares/isLoggin");
 const {
   createProduct,
