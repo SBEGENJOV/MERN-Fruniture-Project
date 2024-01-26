@@ -44,7 +44,20 @@ exports.getCoupon = asyncHandler(async (req, res) => {
   const coupon = await Coupon.findById(req.params.id);
   res.status(201).json({
     status: "Başarılı",
-    message: "Post getirildi",
+    message: "Kupon getirildi",
     coupon,
   });
 });
+
+//Kupon silme
+exports.deleteCoupon = asyncHandler(async (req, res) => {
+    const couponFound = await Coupon.findById(req.params.id);
+    if (!couponFound) {
+      throw new Error("Kupon bulunamadı");
+    }
+    await Coupon.findByIdAndDelete(req.params.id);
+    res.status(201).json({
+      status: "Başarılı",
+      message: "Kupon silindi",
+    });
+  });

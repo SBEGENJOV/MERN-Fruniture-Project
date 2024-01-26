@@ -72,7 +72,7 @@ exports.getProduct = asyncHandler(async (req, res) => {
   const product = await Product.findById(req.params.id).populate("productType");
   res.status(201).json({
     status: "Başarılı",
-    message: "Post getirildi",
+    message: "Ürün getirildi",
     product,
   });
 });
