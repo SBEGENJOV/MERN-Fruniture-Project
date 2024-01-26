@@ -5,6 +5,7 @@ const http = require("http");
 const express = require("express");
 const usersRouter = require("./router/userRouter");
 const productRouter = require("./router/productRouter");
+const couponRouter = require("./router/couponRouter");
 require("./config/database")(); //Sayfa açıldıgında direkt çalışacagı için bir değişkene atama geregi duymadık
 //!Server oluşturma kodları
 const app = express();
@@ -15,6 +16,7 @@ app.use(express.json());
 app.use(cors());
 app.use("/users", usersRouter);
 app.use("/products", productRouter);
+app.use("/coupon", couponRouter);
 
 const server = http.createServer(app);
 
