@@ -1,21 +1,17 @@
 const mongoose = require("mongoose");
 
-//Scema
-const CommentSchema = mongoose.Schema(
-  {
-    text: { type: String, required: true },
-    rating: { type: Number, required: true },
-    user: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true }, //ilişkili veri tabanı oluşturma şekli
-  },
-  { timestamps: true }
-);
 const ProductSchema = mongoose.Schema(
   {
     name: { type: String, required: true },
     img: [{ type: String, required: true }],
     colors: [{ type: String, required: true }],
     description: { type: String, required: true },
-    comment: [CommentSchema],
+    comments: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Comment",
+      },
+    ],
     stokCode: { type: String, required: true },
     price: {
       current: { type: Number, required: true },
