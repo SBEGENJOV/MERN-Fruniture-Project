@@ -94,7 +94,7 @@ exports.deleteProduct = asyncHandler(async (req, res) => {
 exports.updateProduct = asyncHandler(async (req, res) => {
   //eşleştirme
   const { id } = req.params;
-  const productFound = await Post.findById(id);
+  const productFound = await Product.findById(id);
   if (!productFound) {
     throw new Error("Ürün yok");
   }
