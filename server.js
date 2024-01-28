@@ -9,6 +9,7 @@ const couponRouter = require("./router/couponRouter");
 const blogRouter = require("./router/blogRouter");
 const campainRouter = require("./router/campainsRouter");
 const categoryRouter = require("./router/categoryRouter");
+const contactRouter = require("./router/contactRouter");
 require("./config/database")(); //Sayfa açıldıgında direkt çalışacagı için bir değişkene atama geregi duymadık
 //!Server oluşturma kodları
 const app = express();
@@ -23,6 +24,7 @@ app.use("/coupon", couponRouter);
 app.use("/blog", blogRouter);
 app.use("/campain", campainRouter);
 app.use("/category", categoryRouter);
+app.use("/contact", contactRouter);
 
 const server = http.createServer(app);
 
