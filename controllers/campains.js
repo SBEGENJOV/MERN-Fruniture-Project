@@ -1,3 +1,4 @@
+const asyncHandler = require("express-async-handler");
 const expressAsyncHandler = require("express-async-handler");
 const User = require("../model/User");
 const Campains = require("../model/Campains");

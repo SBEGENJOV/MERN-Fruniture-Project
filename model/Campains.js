@@ -9,5 +9,5 @@ const CampainsSchema = mongoose.Schema(
   { timestamps: true }
 );
 
-const Campains = mongoose.model("Blog", CampainsSchema);
+const Campains = mongoose.model("Campains", CampainsSchema);
 module.exports = Campains;
