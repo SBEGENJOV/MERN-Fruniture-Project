@@ -33,7 +33,6 @@ exports.getCategories = asyncHandler(async (req, res) => {
 });
 
 //Kategori silme
-
 exports.deleteCategory = asyncHandler(async (req, res) => {
   await Category.findByIdAndDelete(req.params.id);
   res.status(201).json({
@@ -43,7 +42,6 @@ exports.deleteCategory = asyncHandler(async (req, res) => {
 });
 
 //Kategori güncelleme
-
 exports.updateCategory = asyncHandler(async (req, res) => {
   const category = await Category.findByIdAndUpdate(
     req.params.id,
