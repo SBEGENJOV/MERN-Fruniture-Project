@@ -71,6 +71,10 @@ exports.deleteBlog = asyncHandler(async (req, res) => {
 //Blog güncelleme
 exports.updateBlog = asyncHandler(async (req, res) => {
   //eşleştirme
+  const userFound = await User.findById(req.userAuth._id);
+  if (!userFound) {
+    throw new Error("Kullanıcı bulunamadı");
+  }
   const { id } = req.params;
   const blogFound = await Blog.findById(id);
   if (!blogFound) {

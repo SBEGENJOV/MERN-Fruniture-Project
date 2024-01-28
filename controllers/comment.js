@@ -2,6 +2,16 @@ const asyncHandler = require("express-async-handler");
 const Comment = require("../model/Comment");
 const Product = require("../model/Product");
 
+//Yorumları getirme
+exports.getComments = asyncHandler(async (req, res) => {
+  const comment = await Comment.find({});
+  res.status(201).json({
+    status: "Başarılı",
+    message: "Yorumlar listelendi",
+    comment,
+  });
+});
+
 //Yorum oluşturma
 exports.createComment = asyncHandler(async (req, res) => {
   const { message, author } = req.body;
