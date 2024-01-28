@@ -1,6 +1,6 @@
 const asyncHandler = require("express-async-handler");
-const Comment = require("../../model/Comment");
-const Product = require("../../model/Product");
+const Comment = require("../model/Comment");
+const Product = require("../model/Product");
 
 //Yorum oluşturma
 exports.createComment = asyncHandler(async (req, res) => {

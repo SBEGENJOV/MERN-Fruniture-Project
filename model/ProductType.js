@@ -8,14 +8,9 @@ const ProductTypeSchema = mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: "Product",
     },
-    category: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Category",
-      required: true,
-    },
   },
   { timestamps: true }
 );
 
-const ProductType = mongoose.model("Category", ProductTypeSchema);
+const ProductType = mongoose.model("ProductType", ProductTypeSchema);
 module.exports = ProductType;
