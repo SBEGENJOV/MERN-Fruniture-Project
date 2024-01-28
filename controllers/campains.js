@@ -68,7 +68,7 @@ exports.deleteCampain = asyncHandler(async (req, res) => {
 });
 
 //Blog güncelleme
-exports.updateBlog = asyncHandler(async (req, res) => {
+exports.updateCampains = asyncHandler(async (req, res) => {
   //eşleştirme
   const userFound = await User.findById(req.userAuth._id);
   if (!userFound) {
