@@ -10,6 +10,8 @@ const blogRouter = require("./router/blogRouter");
 const campainRouter = require("./router/campainsRouter");
 const categoryRouter = require("./router/categoryRouter");
 const contactRouter = require("./router/contactRouter");
+const commentRouter = require("./router/commentRouter");
+const productTypeRouter = require("./router/productTypeRouter");
 require("./config/database")(); //Sayfa açıldıgında direkt çalışacagı için bir değişkene atama geregi duymadık
 //!Server oluşturma kodları
 const app = express();
@@ -25,6 +27,8 @@ app.use("/blog", blogRouter);
 app.use("/campain", campainRouter);
 app.use("/category", categoryRouter);
 app.use("/contact", contactRouter);
+app.use("/comment", commentRouter);
+app.use("/productType", productTypeRouter);
 
 const server = http.createServer(app);
 
