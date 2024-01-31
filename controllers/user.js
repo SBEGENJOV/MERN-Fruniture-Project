@@ -139,7 +139,7 @@ exports.dislikedProduct = expressAsyncHandler(async (req, res) => {
   const userId = req.userAuth._id;
   // Ürünü bulma
   const product = await Product.findById(id);
-  
+
   if (!product) {
     throw new Error("Ürün yok");
   }
@@ -149,10 +149,10 @@ exports.dislikedProduct = expressAsyncHandler(async (req, res) => {
   user.likedProduct = user.likedProduct.filter(
     (like) => like.toString() !== id.toString()
   );
-  
+
   // Kullanıcının değişiklikleri kaydetme
   await user.save();
-  
+
   res.status(200).json({ message: "Ürün beğenilenlerden çıkarıldı.", user });
 });
 

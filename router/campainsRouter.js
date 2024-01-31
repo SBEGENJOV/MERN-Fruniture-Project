@@ -12,6 +12,7 @@ const {
 } = require("../controllers/campains");
 const campainRouter = express.Router();
 
+//Kampanya route
 campainRouter.post("/", isLoggin, upload.single("file"), createCampains);
 campainRouter.get("/", getCampains);
 campainRouter.get("/:id", getCampain);

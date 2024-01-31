@@ -11,6 +11,7 @@ const {
 } = require("../controllers/producttype");
 const productTypeRouter = express.Router();
 
+//Ürün Tip i route
 productTypeRouter.post("/", isLoggin, upload.single("file"), createProductType);
 productTypeRouter.get("/", getProductTypes);
 productTypeRouter.delete("/:id", isLoggin, deleteProductType);

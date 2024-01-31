@@ -10,6 +10,7 @@ const {
 } = require("../controllers/coupon");
 const couponRouter = express.Router();
 
+//Kupon Route
 couponRouter.post("/", isLoggin, createCoupon);
 couponRouter.get("/", getCoupons);
 couponRouter.get("/:id", getCoupon);

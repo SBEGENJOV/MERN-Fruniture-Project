@@ -12,6 +12,8 @@ const {
 } = require("../controllers/product");
 const productRouter = express.Router();
 
+
+//Ürün Route
 productRouter.post("/", isLoggin, upload.single("file"), createProduct);
 productRouter.get("/", getProducts);
 productRouter.get("/:id", getProduct);

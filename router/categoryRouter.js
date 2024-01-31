@@ -8,6 +8,8 @@ const {
 } = require("../controllers/category");
 const categoryRouter = express.Router();
 
+
+//Category route
 categoryRouter.post("/", isLoggin, createCategory);
 categoryRouter.get("/", getCategories);
 categoryRouter.delete("/:id", isLoggin, deleteCategory);

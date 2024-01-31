@@ -12,6 +12,7 @@ const {
 } = require("../controllers/blogs");
 const blogRouter = express.Router();
 
+//Blog route
 blogRouter.post("/", isLoggin, upload.single("file"), createBlog);
 blogRouter.get("/", getBlogs);
 blogRouter.get("/:id", getBlog);

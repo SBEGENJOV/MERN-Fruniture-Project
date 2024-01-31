@@ -8,6 +8,8 @@ const {
 } = require("../controllers/comment");
 const commentRouter = express.Router();
 
+
+//Yorum Route
 commentRouter.post("/", createComment);
 commentRouter.get("/", getComments);
 commentRouter.delete("/:id", isLoggin, deleteComment);

@@ -19,6 +19,7 @@ const usersRouter = express.Router();
 //!Dosya yükleme ara yazılımı
 const upload = multer({ storage });
 
+//User Routeleri
 usersRouter.post("/register", register);
 usersRouter.post("/login", login);
 usersRouter.get("/profile/", isLoggin, getProfile);
