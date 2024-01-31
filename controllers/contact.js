@@ -1,6 +1,6 @@
 const asyncHandler = require("express-async-handler");
 const Contact = require("../model/Contact");
-const User = require("../model/User");
+const User = require("../model/user");
 
 //İletişim mesajlarını getirme
 exports.getContacts = asyncHandler(async (req, res) => {
