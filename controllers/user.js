@@ -5,6 +5,7 @@ const User = require("../model/user");
 const Product = require("../model/Product");
 const generateToken = require("../utils/generateToken");
 const expressAsyncHandler = require("express-async-handler");
+const sendEmail = require("../utils/sendEmail");
 
 //Kullanıcı kayıt olma işlemi
 
