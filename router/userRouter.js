@@ -9,10 +9,10 @@ const {
   resetPassword,
   forgotpassword,
   getProfile,
+  productViewers,
 } = require("../controllers/user");
 const isLoggin = require("../middlewares/isLoggin");
 const storage = require("../utils/fileUpload");
-
 
 //*Kütüphaneyi kullana bilmek için değişkene atadım.
 const usersRouter = express.Router();
@@ -28,6 +28,7 @@ usersRouter.put("/dislikes/:id", isLoggin, dislikedProduct);
 usersRouter.put("/update-profile/", isLoggin, updateUserProfile);
 usersRouter.post("/forgot-password/", forgotpassword);
 usersRouter.post("/reset-password/:resetToken/", resetPassword);
+usersRouter.post("/product-view/", productViewers);
 
 //*Kullana bilmek için eksport ediyorum
 module.exports = usersRouter;

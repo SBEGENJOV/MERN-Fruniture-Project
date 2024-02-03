@@ -8,7 +8,6 @@ const expressAsyncHandler = require("express-async-handler");
 const sendEmail = require("../utils/sendEmail");
 
 //Kullanıcı kayıt olma işlemi
-
 exports.register = asyncHandler(async (req, res) => {
   //Kayıt işlemi
   const { username, email, password } = req.body;
