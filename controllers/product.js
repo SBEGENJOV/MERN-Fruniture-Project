@@ -48,7 +48,6 @@ exports.createProduct = asyncHandler(async (req, res) => {
       new: true,
     }
   );
-
   //Sonuçları bildirme
   res.json({
     status: "Başarılı",
