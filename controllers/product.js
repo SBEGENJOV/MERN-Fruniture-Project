@@ -68,7 +68,12 @@ exports.getProducts = asyncHandler(async (req, res) => {
 
 //Tekli ürün atma
 exports.getProduct = asyncHandler(async (req, res) => {
-  const product = await Product.findById(req.params.id).populate("productType");
+  const product = await Product.findById(req.params.id).populate({
+    path: "productType",
+    populate: {
+      path: "category",
+    },
+  });
   res.status(201).json({
     status: "Başarılı",
     message: "Ürün getirildi",

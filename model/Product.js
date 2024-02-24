@@ -23,12 +23,7 @@ const ProductSchema = mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: "ProductType",
       required: true,
-    },
-    shared: {
-      type: mongoose.Schema.Types.ObjectId,
-      required: true,
-      ref: "User",
-    },
+    }
   },
   { timestamps: true }
 );
