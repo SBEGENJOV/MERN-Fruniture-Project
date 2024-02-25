@@ -14,9 +14,8 @@ exports.getComments = asyncHandler(async (req, res) => {
 
 //Yorum oluşturma
 exports.createComment = asyncHandler(async (req, res) => {
-  const { message, author } = req.body;
+  const { message ,productId} = req.body;
   //get post id from params
-  const productId = req.params.productId;
   //* Create comment
   const comment = await Comment.create({
     message,

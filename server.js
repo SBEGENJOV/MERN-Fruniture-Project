@@ -12,6 +12,12 @@ const categoryRouter = require("./router/categoryRouter");
 const contactRouter = require("./router/contactRouter");
 const commentRouter = require("./router/commentRouter");
 const productTypeRouter = require("./router/productTypeRouter");
+const paymentRoute=require("../MERN-Fruniture-Project/controllers/payment.js")
+const {
+  globalErrorHandler,
+  notFound,
+} = require("./middlewares/globalErrorHandler");
+
 require("./config/database")(); //Sayfa açıldıgında direkt çalışacagı için bir değişkene atama geregi duymadık
 //!Server oluşturma kodları
 const app = express();
@@ -21,6 +27,7 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 app.use("/users", usersRouter);
+app.use("/payment", paymentRoute);
 app.use("/products", productRouter);
 app.use("/coupon", couponRouter);
 app.use("/blog", blogRouter);
@@ -30,6 +37,10 @@ app.use("/contact", contactRouter);
 app.use("/comment", commentRouter);
 app.use("/productType", productTypeRouter);
 
+// 404 sayfası
+app.use(notFound);
+//! Hata alınca gitmesi gereken alan
+app.use(globalErrorHandler);
 const server = http.createServer(app);
 
 //? Server Başlatma kodları

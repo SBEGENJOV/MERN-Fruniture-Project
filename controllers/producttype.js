@@ -44,6 +44,18 @@ exports.getProductTypes = asyncHandler(async (req, res) => {
     productType,
   });
 });
+//Tekli tür getirme
+exports.getProductTypesOne = asyncHandler(async (req, res) => {
+  const productType = await ProductType.findById(req.params.id).populate({
+    path: "products",
+    model: "Product",
+  });
+  res.status(201).json({
+    status: "Başarılı",
+    message: "Türler listelendi",
+    productType,
+  });
+});
 
 //Türleri silme
 exports.deleteProductType = asyncHandler(async (req, res) => {

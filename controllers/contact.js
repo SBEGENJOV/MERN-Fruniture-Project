@@ -14,10 +14,6 @@ exports.getContacts = asyncHandler(async (req, res) => {
 
 //Mesaj oluşturma
 exports.createContact = asyncHandler(async (req, res) => {
-  const userFound = await User.findById(req.userAuth._id);
-  if (!userFound) {
-    throw new Error("Kullanıcı bulunamadı");
-  }
   //* Create contact
   const contact = await Contact.create(req.body);
   //send the response

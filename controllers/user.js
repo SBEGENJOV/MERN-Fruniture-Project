@@ -58,6 +58,7 @@ exports.login = asyncHandler(async (req, res) => {
 
 //Kullanıcı bilgilerini getirme
 exports.getProfile = asyncHandler(async (req, res, next) => {
+  const id = req.params.id;
   //İlk populate fonksiyonu, "productViewrs" adlı bir alanı doldurur. Bu alanın değerleri, Product modeliyle ilişkilidir. Yani, User modelindeki productViewrs alanındaki her öğe, ilgili Product modeli ile ilişkilendirilen verilerle doldurulur. path parametresi, doldurulacak alanın adını belirtirken, model parametresi ise ilişkilendirilen modelin adını belirtir.
   const user = await User.findById(id)
     .populate({
@@ -75,30 +76,36 @@ exports.getProfile = asyncHandler(async (req, res, next) => {
   });
 });
 
-//Bakılan ürünü bakılanlara ekleme
 exports.productViewers = asyncHandler(async (req, res) => {
-  //* Find that we want to view his profile
-  const productId = req.params.productId;
+  // Gelen istek parametrelerini doğru şekilde alın
+  const id = req.params.id;
 
-  const product = await Product.findById(productId);
+  // Ürünü bulun ve kontrol edin
+  const product = await Product.findById(id);
   if (!product) {
-    throw new Error("Böyle bir ürün yok");
+    return res.status(404).json({ message: "Böyle bir ürün bulunamadı" });
   }
-  //Kendi bilgilerini bulmak
+
+  // Kullanıcı bilgilerini alın
   const currentUserId = req.userAuth._id;
   const currentUser = await User.findById(currentUserId);
-  //? Check if user already viewed the profile
-  if (currentUser?.productViewrs?.includes(productId)) {
-    throw new Error("Zaten bakmışsın");
+
+  // Kullanıcının zaten ürünü görüntüleyip görüntülemediğini kontrol edin
+  if (currentUser?.productViewrs?.includes(id)) {
+    return res.status(400).json({ message: "Zaten bu ürünü görüntülediniz" });
   }
-  //push the user current user id into the user profile
-  currentUser.productViewrs.push(productId);
+
+  // Kullanıcının ürünü görüntülediğini kaydedin
+  currentUser.productViewrs.push(id);
   await currentUser.save();
+
+  // Başarılı yanıtı döndürün
   res.json({
-    message: "Ürün bakılanlar listesine eklendi",
+    message: "Ürün görüntüleyenler listesine eklendi",
     status: "Başarılı",
   });
 });
+
 
 //Ürün begenme
 exports.likeProduct = expressAsyncHandler(async (req, res) => {
