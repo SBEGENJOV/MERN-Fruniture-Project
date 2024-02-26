@@ -23,7 +23,7 @@ const ProductSchema = mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: "ProductType",
       required: true,
-    }
+    },
   },
   { timestamps: true }
 );

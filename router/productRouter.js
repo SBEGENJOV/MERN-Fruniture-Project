@@ -9,14 +9,16 @@ const {
   getProduct,
   deleteProduct,
   updateProduct,
+  getProductsCategory,
 } = require("../controllers/product");
 const productRouter = express.Router();
 
 
 //Ürün Route
 productRouter.post("/", isLoggin, upload.single("file"), createProduct);
-productRouter.get("/", getProducts);
 productRouter.get("/:id", getProduct);
+productRouter.get("/", getProducts);
+productRouter.get("/productType/:id", getProductsCategory);
 productRouter.delete("/:id", isLoggin, deleteProduct);
 productRouter.put("/:id", isLoggin, upload.single("file"), updateProduct);
 

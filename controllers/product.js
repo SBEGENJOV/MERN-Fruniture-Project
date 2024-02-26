@@ -66,21 +66,35 @@ exports.getProducts = asyncHandler(async (req, res) => {
   }
 });
 
+// Tüm ürünleri categoriye göre getirme
+exports.getProductsCategory = asyncHandler(async (req, res) => {
+  try {
+    const categoryId = req.params.id;
+
+    // Kategorinin ID'sine göre ürünleri bul
+    const products = await Product.find({ productType: categoryId });
+    res.status(200).json(products);
+    console.log(products);
+  } catch (error) {
+    res.status(500).json({ error: "Server hatası" });
+  }
+});
+
 //Tekli ürün atma
 exports.getProduct = asyncHandler(async (req, res) => {
   const product = await Product.findById(req.params.id)
-  .populate({
-    path: "productType",
-    populate: {
-      path: "category",
-    },
-  })
-  .populate({
-    path: "comments",
-    populate: {
-      path: "author", // Yorumlardaki kullanıcıları da populate et
-    },
-  });
+    .populate({
+      path: "productType",
+      populate: {
+        path: "category",
+      },
+    })
+    .populate({
+      path: "comments",
+      populate: {
+        path: "author", // Yorumlardaki kullanıcıları da populate et
+      },
+    });
 
   res.status(201).json({
     status: "Başarılı",
