@@ -12,7 +12,7 @@ const categoryRouter = require("./router/categoryRouter");
 const contactRouter = require("./router/contactRouter");
 const commentRouter = require("./router/commentRouter");
 const productTypeRouter = require("./router/productTypeRouter");
-const paymentRoute=require("../MERN-Fruniture-Project/controllers/payment.js")
+const paymentRoute=require("./controllers/payment.js")
 const {
   globalErrorHandler,
   notFound,
