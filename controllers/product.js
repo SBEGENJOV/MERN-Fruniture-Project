@@ -79,6 +79,22 @@ exports.getProductsCategory = asyncHandler(async (req, res) => {
     res.status(500).json({ error: "Server hatası" });
   }
 });
+// Tüm ürünleri isime göre getirme
+exports.getProductsName = asyncHandler(async (req, res) => {
+  try {
+    const productName = req.params.productName;
+    const product = await Product.find({
+      name: {
+        $regex: productName,
+        $options: "i",
+      },
+    });
+    res.status(200).json({ product });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ error: "server error" });
+  }
+});
 
 //Tekli ürün atma
 exports.getProduct = asyncHandler(async (req, res) => {
